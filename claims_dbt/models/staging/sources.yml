@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: public
+    tables:
+      - name: raw_patients
+      - name: raw_encounters
+      - name: raw_conditions
+      - name: raw_claims
