@@ -1,0 +1,119 @@
+table fct_claims
+	lineageTag: 1e24133e-16f0-42f6-9e19-84d6642c98e2
+
+	/// Filtered to claim_type = "Claim" so the ExplanationOfBenefit mirror rows never inflate the count.
+	measure 'Claim Count' = CALCULATE(DISTINCTCOUNT(fct_claims[claim_id]), fct_claims[claim_type] = "Claim")
+		formatString: #,0
+		lineageTag: c998e936-fae6-4058-871a-e4e91929fe2e
+
+	measure 'Total Billed' = CALCULATE(SUM(fct_claims[total_amount]), fct_claims[claim_type] = "Claim")
+		formatString: \$#,0
+		lineageTag: a7a8f902-cff3-40e6-aa65-a3ee37aec76d
+
+	measure 'Avg Claim' = DIVIDE([Total Billed], [Claim Count])
+		formatString: \$#,0.00
+		lineageTag: 9dc563eb-3614-496b-950b-51c1acdc39b5
+
+	measure 'Median Claim' = CALCULATE(MEDIAN(fct_claims[total_amount]), fct_claims[claim_type] = "Claim")
+		formatString: \$#,0.00
+		lineageTag: ecb4f9d1-c733-4c05-820b-34593b06a695
+
+	measure 'Distinct Patients' = CALCULATE(DISTINCTCOUNT(fct_claims[patient_id]), fct_claims[claim_type] = "Claim")
+		formatString: #,0
+		lineageTag: 03097b18-32b8-4aac-9e08-de04d8eabc0b
+
+	measure 'Claims per Patient' = DIVIDE([Claim Count], [Distinct Patients])
+		formatString: #,0.0
+		lineageTag: 359f57ec-a962-420a-a611-dd059891b97f
+
+	/// Unfiltered helpers for the data-quality scorecard (show both claim types).
+	measure Rows = COUNTROWS(fct_claims)
+		formatString: #,0
+		lineageTag: ae468172-c571-4a90-a4f5-c91f86a3f878
+
+	measure 'Billed (unfiltered)' = SUM(fct_claims[total_amount])
+		formatString: \$#,0
+		lineageTag: 4b4d5c39-844f-4a43-99c5-4e3adbe16ae0
+
+	column claim_id
+		dataType: string
+		lineageTag: a856465c-1b26-4fdc-bb2e-e47cdbefb846
+		summarizeBy: none
+		sourceColumn: claim_id
+
+	column patient_id
+		dataType: string
+		lineageTag: 1cd347e1-9443-4367-b7a5-ec33c00b7706
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column claim_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cd62ccd5-dba1-4386-9e0f-495d3de2aeb9
+		summarizeBy: none
+		sourceColumn: claim_date
+
+		variation Variation
+			isDefault
+			relationship: 61bd5d6c-ccfc-4d6d-99b9-6e0d287e5556
+			defaultHierarchy: LocalDateTable_66f91088-1dfd-40bb-8088-d7c682f4acf6.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column total_amount
+		dataType: double
+		lineageTag: ddfc260e-4c3b-4dcc-9de8-d7ee4e20e0da
+		summarizeBy: sum
+		sourceColumn: total_amount
+
+	column status
+		dataType: string
+		lineageTag: 7a8f2254-44f4-4ee7-97a1-ee2eb3c197fc
+		summarizeBy: none
+		sourceColumn: status
+
+	column claim_type
+		dataType: string
+		lineageTag: 0dc78965-3e83-4495-8740-5ce288347e97
+		summarizeBy: none
+		sourceColumn: claim_type
+
+	column patient_gender
+		dataType: string
+		lineageTag: 70a57ff4-28ff-49eb-b4c1-d8df24bc362b
+		summarizeBy: none
+		sourceColumn: patient_gender
+
+	column patient_age
+		dataType: double
+		lineageTag: c71b69cf-53cf-456e-9b5d-7ca172c2b456
+		summarizeBy: sum
+		sourceColumn: patient_age
+
+		annotation SummarizationSetBy = Automatic
+
+	column patient_state
+		dataType: string
+		lineageTag: 47ac09e0-1da5-4123-9935-5f881b491611
+		summarizeBy: none
+		sourceColumn: patient_state
+
+	column 'Age Band Sort' = SWITCH(TRUE(), fct_claims[patient_age] < 18, 1, fct_claims[patient_age] < 35, 2, fct_claims[patient_age] < 50, 3, fct_claims[patient_age] < 65, 4, 5)
+		dataType: int64
+		isHidden
+		lineageTag: 864b9f6d-4d3e-4c97-9a68-4ee9b6a269bb
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Band' = SWITCH(TRUE(), fct_claims[patient_age] < 18, "0-17", fct_claims[patient_age] < 35, "18-34", fct_claims[patient_age] < 50, "35-49", fct_claims[patient_age] < 65, "50-64", "65+")
+		dataType: string
+		lineageTag: 890a9120-ffe7-4b2b-9c8f-67e803b1e5b7
+		summarizeBy: none
+		sortByColumn: 'Age Band Sort'
+
+	partition fct_claims = m
+		mode: import
+		source = let Source = PostgreSQL.Database("localhost", "health_care"), Data = Source{[Schema="public", Item="fct_claims"]}[Data] in Data
+

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "kpiPatients",
+  "position": {
+    "x": 648,
+    "y": 56,
+    "z": 2,
+    "height": 110,
+    "width": 296,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_claims"
+                    }
+                  },
+                  "Property": "Distinct Patients"
+                }
+              },
+              "queryRef": "fct_claims.Distinct Patients",
+              "nativeQueryRef": "Distinct Patients"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

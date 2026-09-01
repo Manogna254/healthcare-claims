@@ -1,0 +1,58 @@
+table stg_conditions
+	lineageTag: 5f3a5f07-580a-49ac-a019-fa4e865c3bf3
+
+	measure 'Condition Records' = COUNTROWS(stg_conditions)
+		formatString: #,0
+		lineageTag: 227b3ea1-b666-4ec4-af1d-a89b5de06f63
+
+	column condition_id
+		dataType: string
+		lineageTag: 1f4e892b-9997-42de-87a4-14c51a1e395f
+		summarizeBy: none
+		sourceColumn: condition_id
+
+	column patient_id
+		dataType: string
+		lineageTag: 5c4454fc-103b-42cc-bebe-8062f99a41cb
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column encounter_id
+		dataType: string
+		lineageTag: fda694b9-ab1b-4b6a-a5ff-5af5e77d8c56
+		summarizeBy: none
+		sourceColumn: encounter_id
+
+	column onset_date
+		dataType: dateTime
+		lineageTag: 3f5081c9-af27-4cd4-9da0-2cc8640e0710
+		summarizeBy: none
+		sourceColumn: onset_date
+
+		variation Variation
+			isDefault
+			relationship: 17064fb8-3968-4c63-b105-f0eadb59f98d
+			defaultHierarchy: LocalDateTable_605eb872-5ba2-4934-84f6-c2dbe4d6281f.'Date Hierarchy'
+
+	column code
+		dataType: string
+		lineageTag: c3f4b682-0585-41f8-a62b-1dc7266b82e3
+		summarizeBy: none
+		sourceColumn: code
+
+	column description
+		dataType: string
+		lineageTag: 829f794c-12a4-4fc6-96d7-af2973e46bcc
+		summarizeBy: none
+		sourceColumn: description
+
+	column clinical_status
+		dataType: string
+		lineageTag: bb418ba7-fe84-448c-8d83-388502f108dd
+		summarizeBy: none
+		sourceColumn: clinical_status
+
+	partition stg_conditions = m
+		mode: import
+		source = let Source = PostgreSQL.Database("localhost", "health_care"), Data = Source{[Schema="public", Item="stg_conditions"]}[Data] in Data
+

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "dqScorecard",
+  "position": {
+    "x": 24,
+    "y": 56,
+    "z": 0,
+    "height": 220,
+    "width": 600,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_claims"
+                    }
+                  },
+                  "Property": "claim_type"
+                }
+              },
+              "queryRef": "fct_claims.claim_type",
+              "nativeQueryRef": "claim_type",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_claims"
+                    }
+                  },
+                  "Property": "Rows"
+                }
+              },
+              "queryRef": "fct_claims.Rows",
+              "nativeQueryRef": "Rows",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_claims"
+                    }
+                  },
+                  "Property": "Billed (unfiltered)"
+                }
+              },
+              "queryRef": "fct_claims.Billed (unfiltered)",
+              "nativeQueryRef": "Billed (unfiltered)",
+              "active": false
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "barConditions",
+  "position": {
+    "x": 24,
+    "y": 296,
+    "z": 2,
+    "height": 392,
+    "width": 1232,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "barChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "stg_conditions"
+                    }
+                  },
+                  "Property": "description"
+                }
+              },
+              "queryRef": "stg_conditions.description",
+              "nativeQueryRef": "description",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "stg_conditions"
+                    }
+                  },
+                  "Property": "Condition Records"
+                }
+              },
+              "queryRef": "stg_conditions.Condition Records",
+              "nativeQueryRef": "Condition Records"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

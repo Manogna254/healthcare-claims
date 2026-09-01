@@ -1,0 +1,5 @@
+# Power BI Desktop local caches / user settings
+.pbi/
+*.pbip.cache.vscode/
+**/.pbi/localSettings.json
+**/cache.abf

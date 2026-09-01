@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "kpiAvg",
+  "position": {
+    "x": 960,
+    "y": 56,
+    "z": 3,
+    "height": 110,
+    "width": 296,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_claims"
+                    }
+                  },
+                  "Property": "Avg Claim"
+                }
+              },
+              "queryRef": "fct_claims.Avg Claim",
+              "nativeQueryRef": "Avg Claim"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

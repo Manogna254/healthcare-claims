@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "barAge",
+  "position": {
+    "x": 24,
+    "y": 440,
+    "z": 6,
+    "height": 250,
+    "width": 400,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "barChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_claims"
+                    }
+                  },
+                  "Property": "Age Band"
+                }
+              },
+              "queryRef": "fct_claims.Age Band",
+              "nativeQueryRef": "Age Band",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_claims"
+                    }
+                  },
+                  "Property": "Claim Count"
+                }
+              },
+              "queryRef": "fct_claims.Claim Count",
+              "nativeQueryRef": "Claim Count"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

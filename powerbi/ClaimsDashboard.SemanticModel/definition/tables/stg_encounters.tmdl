@@ -1,0 +1,57 @@
+table stg_encounters
+	lineageTag: 4e971b68-3c47-44ff-b23e-7ad8261f94b9
+
+	measure 'Encounter Count' = COUNTROWS(stg_encounters)
+		formatString: #,0
+		lineageTag: 32062a2f-0ea0-4a15-8da2-0391370f4b3b
+
+	column encounter_id
+		dataType: string
+		lineageTag: b79bd7ee-60ef-4856-9834-b70c1c99fcf6
+		summarizeBy: none
+		sourceColumn: encounter_id
+
+	column patient_id
+		dataType: string
+		lineageTag: 09d05ca4-edf1-497b-8c58-e6f90dd6a6a6
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column start_date
+		dataType: dateTime
+		lineageTag: d5a3722c-56a3-4c09-9804-e13aebdef6ad
+		summarizeBy: none
+		sourceColumn: start_date
+
+		variation Variation
+			isDefault
+			relationship: b1976407-61dc-4339-a4d8-bea4cab123ef
+			defaultHierarchy: LocalDateTable_b8a85d61-da30-4bdd-8352-6cb2a80b1eab.'Date Hierarchy'
+
+	column end_date
+		dataType: dateTime
+		lineageTag: 1bdde46a-2791-4942-a654-6e66e7017b2c
+		summarizeBy: none
+		sourceColumn: end_date
+
+		variation Variation
+			isDefault
+			relationship: 74ada065-33d3-4b10-90bb-ed9a90fca046
+			defaultHierarchy: LocalDateTable_65749a7b-e4fa-4abc-ad96-501e83aad7c3.'Date Hierarchy'
+
+	column encounter_class
+		dataType: string
+		lineageTag: 0ef7d73d-946d-47e3-8844-fe9a037f75dd
+		summarizeBy: none
+		sourceColumn: encounter_class
+
+	column reason_description
+		dataType: string
+		lineageTag: f91c7f85-c589-4625-9658-651bc9ab893b
+		summarizeBy: none
+		sourceColumn: reason_description
+
+	partition stg_encounters = m
+		mode: import
+		source = let Source = PostgreSQL.Database("localhost", "health_care"), Data = Source{[Schema="public", Item="stg_encounters"]}[Data] in Data
+

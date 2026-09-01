@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "lineVolume",
+  "position": {
+    "x": 24,
+    "y": 180,
+    "z": 4,
+    "height": 240,
+    "width": 608,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_claims"
+                    }
+                  },
+                  "Property": "claim_date"
+                }
+              },
+              "queryRef": "fct_claims.claim_date",
+              "nativeQueryRef": "claim_date",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_claims"
+                    }
+                  },
+                  "Property": "Claim Count"
+                }
+              },
+              "queryRef": "fct_claims.Claim Count",
+              "nativeQueryRef": "Claim Count"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

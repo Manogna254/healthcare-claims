@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["fct_claims","stg_conditions","stg_encounters"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table fct_claims
+ref table stg_conditions
+ref table stg_encounters
+ref table DateTableTemplate_5ce1445b-dafc-4d46-a684-1693b6f159fc
+ref table LocalDateTable_66f91088-1dfd-40bb-8088-d7c682f4acf6
+ref table LocalDateTable_605eb872-5ba2-4934-84f6-c2dbe4d6281f
+ref table LocalDateTable_b8a85d61-da30-4bdd-8352-6cb2a80b1eab
+ref table LocalDateTable_65749a7b-e4fa-4abc-ad96-501e83aad7c3
+

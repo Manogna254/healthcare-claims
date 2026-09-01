@@ -1,0 +1,24 @@
+relationship 61bd5d6c-ccfc-4d6d-99b9-6e0d287e5556
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fct_claims.claim_date
+	toColumn: LocalDateTable_66f91088-1dfd-40bb-8088-d7c682f4acf6.Date
+
+relationship 17064fb8-3968-4c63-b105-f0eadb59f98d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: stg_conditions.onset_date
+	toColumn: LocalDateTable_605eb872-5ba2-4934-84f6-c2dbe4d6281f.Date
+
+relationship b1976407-61dc-4339-a4d8-bea4cab123ef
+	joinOnDateBehavior: datePartOnly
+	fromColumn: stg_encounters.start_date
+	toColumn: LocalDateTable_b8a85d61-da30-4bdd-8352-6cb2a80b1eab.Date
+
+relationship 74ada065-33d3-4b10-90bb-ed9a90fca046
+	joinOnDateBehavior: datePartOnly
+	fromColumn: stg_encounters.end_date
+	toColumn: LocalDateTable_65749a7b-e4fa-4abc-ad96-501e83aad7c3.Date
+
+relationship 889c660d-6db6-aef8-38aa-8d07cd6ac115
+	fromColumn: stg_conditions.encounter_id
+	toColumn: stg_encounters.encounter_id
+
